@@ -12,7 +12,6 @@ def years_ago(date):
 
     year = datetime.strptime(date, '%d %b, %Y').year
     return int(THIS_YEAR - year)
-    pass
 
 
 def convert_eu_to_us_date(date):
@@ -25,7 +24,6 @@ def convert_eu_to_us_date(date):
     us_date = datetime.strptime(date, '%d/%m/%Y')
 
     return datetime.strftime(us_date, '%m/%d/%Y')
-    pass
 
 
 years_ago('8 Aug, 2015')
