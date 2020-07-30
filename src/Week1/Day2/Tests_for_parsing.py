@@ -1,7 +1,7 @@
 import unittest
 import datetime
-from Parsing_dates_from_logs import convert_to_datetime
-from Parsing_dates_from_logs import time_between_shutdowns
+from src.Week1.Day2.Parsing_dates_from_logs import convert_to_datetime
+from src.Week1.Day2.Parsing_dates_from_logs import time_between_shutdowns
 
 class MyTestCase(unittest.TestCase):
     def test_info_log_str(self):

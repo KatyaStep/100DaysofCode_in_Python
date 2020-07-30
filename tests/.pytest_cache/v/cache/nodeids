@@ -1,0 +1,10 @@
+[
+  "Week2/dict_list_test.py::test_every_nth_state",
+  "Week2/hello_test.py::test_hello",
+  "Week2/test_dict_list.py::test_combine_states_abbrv",
+  "Week2/test_dict_list.py::test_every_nth_state",
+  "Week2/test_dict_list.py::test_get_longest_abbrev",
+  "Week2/test_dict_list.py::test_get_longest_state",
+  "Week2/test_dict_list.py::test_state_abbrev",
+  "Week2/test_dict_list.py::test_state_abbrev_not_found"
+]
