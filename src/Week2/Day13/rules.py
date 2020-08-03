@@ -34,25 +34,16 @@ class Player:
     def get_score(self):
         return self.score
 
-# class AI(Player):
-#     pass
-#     # def __init__(self, name):
-#     #     self.name = name
 
 
 class Game:
     def __init__(self):
-        # self.rolls = {
-        #     'paper': Roll(name='paper', loose='scissors', win='rock'),
-        #     'rock': Roll(name='rock', loose='paper', win='scissors'),
-        #     'scissors': Roll(name='scissors', loose='rock', win='paper')
-        # }
         self.rolls = Roll.rolls
         self.player1 = None
         self.player2 = Player('Computer', 0)
 
     def start_game(self):
-        name = input("Player1, your name is: ")
+        name = input("Player1, your name is: ").capitalize()
 
         self.player1 = Player(name, 0)
         # self.player2 = Player('Computer')
@@ -64,7 +55,7 @@ class Game:
         if player.get_name() != 'Computer':
             print()
             print(f'Choose rolls from:{list(rps)}')
-            roll = input(f'{player.get_name()} your roll: ')
+            roll = input(f'{player.get_name()} your roll: ').lower()
         else:
             roll = random.choice(list(rps))
 
@@ -73,17 +64,22 @@ class Game:
     def game_round(self):
         round_number = 3
         count = 0
+
         while count != round_number:
             print()
             print(f"----------Round {count+1}----------")
-            player1_roll = self.__get_roll(self.player1)
-            print(f'{self.player1.get_name()} rolls {player1_roll}')
-            player2_roll = self.__get_roll(self.player2)
-            print(f'{self.player2.get_name()} rolls {player2_roll}')
+            try:
+                player1_roll = self.__get_roll(self.player1)
+                print(f'{self.player1.get_name()} rolls {player1_roll}')
+                player2_roll = self.__get_roll(self.player2)
+                print(f'{self.player2.get_name()} rolls {player2_roll}')
 
-            # Get a winner of the round
-            self.define_round_winner(player1_roll, player2_roll, self.rolls)
-            count += 1
+                # Get a winner of the round
+                self.define_round_winner(player1_roll, player2_roll, self.rolls)
+                count += 1
+            except KeyError:
+                print('Sorry, you typed a wrong roll. Try it again.')
+                continue
 
         # Get a result of the Game
         self.define_game_winner(self.player1.get_score(), self.player2.get_score())
@@ -92,7 +88,7 @@ class Game:
         print()
 
         if roll2 == roll1:
-            print("It's tie")
+            print("It's a tie")
             print(f'{self.player1.get_name()}: {self.player1.get_score()}; '
                   f'{self.player2.get_name()}: {self.player2.get_score()}')
 
@@ -129,6 +125,6 @@ class Game:
             return True
 
 
-game1 = Game()
-game1.start_game()
-game1.game_round()
+# game1 = Game()
+# game1.start_game()
+# game1.game_round()
