@@ -24,11 +24,15 @@ class Roll:
 
 
 class Player:
-    def __init__(self, name):
+    def __init__(self, name, score):
         self.__name = name
+        self.score = score
 
     def get_name(self):
         return self.__name
+
+    def get_score(self):
+        return self.score
 
 # class AI(Player):
 #     pass
@@ -44,12 +48,14 @@ class Game:
         #     'scissors': Roll(name='scissors', loose='rock', win='paper')
         # }
         self.rolls = Roll.rolls
+        self.player1 = None
+        self.player2 = Player('Computer', 0)
 
     def start_game(self):
         name = input("Player1, your name is: ")
 
-        self.player1 = Player(name)
-        self.player2 = Player('Computer')
+        self.player1 = Player(name, 0)
+        # self.player2 = Player('Computer')
 
         return '{}, {}'.format(self.player1, self.player2)
 
@@ -65,10 +71,62 @@ class Game:
         return roll
 
     def game_round(self):
-        player1_roll = self.__get_roll(self.player1)
-        print(f'{self.player1.get_name()} rolls {player1_roll}')
-        player2_roll = self.__get_roll(self.player2)
-        print(f'{self.player2.get_name()} rolls {player2_roll}')
+        round_number = 3
+        count = 0
+        while count != round_number:
+            print()
+            print(f"----------Round {count+1}----------")
+            player1_roll = self.__get_roll(self.player1)
+            print(f'{self.player1.get_name()} rolls {player1_roll}')
+            player2_roll = self.__get_roll(self.player2)
+            print(f'{self.player2.get_name()} rolls {player2_roll}')
+
+            # Get a winner of the round
+            self.define_round_winner(player1_roll, player2_roll, self.rolls)
+            count += 1
+
+        # Get a result of the Game
+        self.define_game_winner(self.player1.get_score(), self.player2.get_score())
+
+    def define_round_winner(self, roll1, roll2, rolls):
+        print()
+
+        if roll2 == roll1:
+            print("It's tie")
+            print(f'{self.player1.get_name()}: {self.player1.get_score()}; '
+                  f'{self.player2.get_name()}: {self.player2.get_score()}')
+
+            return False
+
+        elif roll2 == rolls[roll1]['win']:
+            self.player1.score += 1
+            print(f'{self.player2.get_name()} lost to {self.player1.get_name()}')
+            print(f'{self.player1.get_name()}: {self.player1.get_score()}, '
+                  f'{self.player2.get_name()}: {self.player2.get_score()}')
+
+            return True
+
+        else:
+            self.player2.score += 1
+            print(f'{self.player1.get_name()} lost to {self.player2.get_name()}')
+            print(f'{self.player1.get_name()}: {self.player1.get_score()}, '
+                  f'{self.player2.get_name()}: {self.player2.get_score()}')
+
+            return True
+
+    def define_game_winner(self, pl1_score, pl2_score):
+        print()
+        print("-------------------------")
+
+        if pl1_score == pl2_score:
+            print("Congratulations. It's tie!")
+            return True
+        elif pl1_score > pl2_score:
+            print(f"{self.player1.get_name()} won the game! ")
+            return True
+        else:
+            print(f"{self.player2.get_name()} won the game! ")
+            return True
 
 
 game1 = Game()
