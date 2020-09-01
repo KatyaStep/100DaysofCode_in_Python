@@ -2,8 +2,7 @@ import research
 
 
 def main():
-    #research.read_data()
-    pass
+    research.app()
 
 
 if __name__ == '__main__':
