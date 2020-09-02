@@ -2,7 +2,6 @@ import os
 import csv
 from collections import defaultdict
 import random
-import pprint
 
 data = dict()
 side_dish = [
@@ -61,62 +60,59 @@ def read_data():
                 continue
 
             if region not in data:
-                data[ region ] = dict()
-            if income not in data[ region ]:
-                data[ region ][ income ] = set()
+                data[region] = dict()
+            if income not in data[region]:
+                data[region][income] = set()
 
             for key, value in record.items():
                 for side in side_dish:
                     if side in key and value.strip():
-                        data[ region ][ income ].add(side)
+                        data[region][income].add(side)
                 for pie in pies:
                     if pie in key and value.strip():
-                        data[ region ][ income ].add(pie + ' pie')
+                        data[region][income].add(pie + ' pie')
                 for desert in deserts:
                     if desert in key and value.strip():
-                        data[ region ][ income ].add(desert)
+                        data[region][income].add(desert)
         # pprint.pprint(data)
     return data
 
 
 def app():
+    regions = defaultdict()
+    income = defaultdict()
+
     question = input('Do you celebrate Thanksgiving?: ')
     if question.lower() == 'yes':
         records = read_data()
-        # regions = "\n".join([str((index+1, record)).strip("()") for index, record in enumerate(records.keys())])
-        #regions = "\n".join([f'{index + 1}. {record}' for index, record in enumerate(records.keys())])
-        regions = defaultdict()
-        income = defaultdict()
-        for index, record in enumerate(records.keys()):
-            regions[index+1] = record
+        try:
+            for index, record in enumerate(records.keys()):
+                regions[index + 1] = record
 
-        print('Choose your region: ')
-        [print(key, value) for key, value in regions.items()]
+            print('Choose your region: ')
+            [print(key, value) for key, value in regions.items()]
+            region_key = int(input('Enter a number: '))
+            user_region = regions[region_key]
 
-        region_key = int(input('Enter a number: '))
-        user_region = regions[region_key]
-        # user_region = input('Enter: ')
-        # number_region = input('Enter: ')
-        # region_index = int(regions.find(number_region))
-        # user_region = regions[region_index+2:].strip()
-        # print(user_region)
-        # income = "\n".join([f'{index+1}. {record}' for index, record in enumerate(records[user_region])])
-        for index, record in enumerate(records[user_region]):
-            income[index] = record
+            for index, record in enumerate(records[user_region]):
+                income[index] = record
+            print("Choose your income: ")
+            [print(key, value) for key, value in income.items()]
 
-        print("Choose your income: ")
-        [print(key, value) for key, value in income.items()]
+            income_key = int(input('Enter a number of the income in the menu: '))
+            user_income = income[income_key]
+            food = list(records[user_region][user_income])
 
-        income_key = int(input('Enter a number of the income in the menu: '))
-        user_income = income[income_key]
-        # print(f"Choose your income:\n {income} ")
-        # user_income = input('Enter: ')
-        # print('---------------')
-        food = list(records[user_region][user_income])
-        print('\n'.join(random.choices(food, k=5)))
-        return True
+            print('\n', '-' * 27)
+            print('The most popular food is ')
+            print('-' * 27)
+            print('\n'.join(random.choices(food, k=5)))
+            print('\nHappy Thanksgiving!')
+            return True
+
+        except KeyError as err:
+            print('\n', '-' * 27)
+            print(f'There is not such an option as "{err}", try it again!')
+
     else:
         print('Good Bye!')
-
-
-#app()
