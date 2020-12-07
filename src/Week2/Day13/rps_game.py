@@ -1,4 +1,4 @@
-from src.Week2.Day13.rules import Game
+from src.Week2.Day13.rules import Game, logging_register
 
 
 def print_header():
@@ -9,6 +9,7 @@ def print_header():
 
 
 def main():
+
     print_header()
     game1 = Game()
     game1.start_game()
@@ -16,4 +17,5 @@ def main():
 
 
 if __name__ == '__main__':
+    logging_register()
     main()

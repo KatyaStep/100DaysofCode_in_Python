@@ -1,4 +1,19 @@
 import random
+import sys
+
+import logbook
+
+app_log = logbook.Logger('App')
+
+
+def logging_register():
+    level = logbook.TRACE
+    log_filename = None
+
+    if not log_filename:
+        logbook.StreamHandler(sys.stdout, level=level).push_application()
+    else:
+        logbook.TimedRotatingFileHandler(log_filename, level=level).push_application()
 
 
 class Roll:
@@ -35,7 +50,6 @@ class Player:
         return self.score
 
 
-
 class Game:
     def __init__(self):
         self.rolls = Roll.rolls
@@ -43,6 +57,8 @@ class Game:
         self.player2 = Player('Computer', 0)
 
     def start_game(self):
+        app_log.notice('Game started')
+
         name = input("Player1, your name is: ").capitalize()
 
         self.player1 = Player(name, 0)
@@ -67,7 +83,7 @@ class Game:
 
         while count != round_number:
             print()
-            print(f"----------Round {count+1}----------")
+            print(f"----------Round {count + 1}----------")
             try:
                 player1_roll = self.__get_roll(self.player1)
                 print(f'{self.player1.get_name()} rolls {player1_roll}')
@@ -78,6 +94,7 @@ class Game:
                 self.define_round_winner(player1_roll, player2_roll, self.rolls)
                 count += 1
             except KeyError:
+                app_log.error('Key Error')
                 print('Sorry, you typed a wrong roll. Try it again.')
                 continue
 
@@ -123,7 +140,6 @@ class Game:
         else:
             print(f"{self.player2.get_name()} won the game! ")
             return True
-
 
 # game1 = Game()
 # game1.start_game()

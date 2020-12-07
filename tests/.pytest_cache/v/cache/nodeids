@@ -6,5 +6,6 @@
   "Week2/test_dict_list.py::test_get_longest_abbrev",
   "Week2/test_dict_list.py::test_get_longest_state",
   "Week2/test_dict_list.py::test_state_abbrev",
-  "Week2/test_dict_list.py::test_state_abbrev_not_found"
+  "Week2/test_dict_list.py::test_state_abbrev_not_found",
+  "test_angle.py::test_angle"
 ]
